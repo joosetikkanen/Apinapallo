@@ -1,0 +1,31 @@
+pp   ppp    ppp ddp
+p     p      p  ddp
+          p       p
+   pp    ppp   pppp
+   pppppppppppppppp
+   pppppppppppppppp
+    ppppppppppppp  
+          ppppppp  
+          pppp     
+                   
+          pppp     
+          ppppppp  
+p  pppppppppppppp  
+p  pppppppppppppppp
+                pp 
+         p p    pp 
+                   
+   pp    p p       
+   pp              
+pppppppppppppppp  p
+   pp     ppppp    
+   pp      ppp     
+   p        p      
+pp      p        pp
+pp     ppp       pp
+ppp  pppppppppppppp
+ppp  pppppppppppppp
+                   
+          b        
+         aaa       
+         aaa       
