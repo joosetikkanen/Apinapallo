@@ -3,7 +3,7 @@
 
 Ohjaimet:
 
-A, D  --> Liikuta alustaa
+Nuolinäppäimet  --> Liikuta alustaa
 
 Space --> Laukaise apinapallo
 
