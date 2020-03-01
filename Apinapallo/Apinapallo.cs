@@ -39,14 +39,15 @@ public class Apinapallo : PhysicsGame
     /// <param name="time"></param>
     protected override void Update(Time time)
     {
-        if (pelaaja != null && Math.Abs(pelaaja.Velocity.Y) < PALLON_MIN_NOPEUS)
+        if (pelaaja != null && Math.Abs(pelaaja.Velocity.Y) < PALLON_MIN_NOPEUS && alkutilanne > 0)
         {
-            pelaaja.Velocity = new Vector(pelaaja.Velocity.X, pelaaja.Velocity.Y * 1.1);
+            pelaaja.Velocity = new Vector(pelaaja.Velocity.X, (pelaaja.Velocity.Y * 1.1) + 1);
         }
         if (pelaaja != null && Math.Abs(pelaaja.Velocity.Y) > PALLON_MAX_NOPEUS)
         {
             pelaaja.Velocity = new Vector(pelaaja.Velocity.X, pelaaja.Velocity.Y * 0.9);
         }
+
 
         base.Update(time);
     }
@@ -119,7 +120,7 @@ public class Apinapallo : PhysicsGame
         {
             valikonKohta.Destroy();
         }
-        
+
         if (kenttaNro == 1) Level.Background.Image = LoadImage("tausta");
         else if (kenttaNro == 2) Level.Background.Image = LoadImage("tokataso");
 
@@ -212,11 +213,12 @@ public class Apinapallo : PhysicsGame
     /// <param name="palikka"></param>
     public void PalikkaanTormays(PhysicsObject pelaaja, Palikka palikka)
     {
-        do
+
+        palikka.OtaVastaanOsuma(palikat);
+        if (palikka.Osumat >= palikat.Length)
         {
-            palikka.OtaVastaanOsuma(palikat);
-        } while (pelaaja.Velocity.Equals(Vector.Zero));
-        
+            pelaaja.Hit(new Vector(pelaaja.Velocity.X, pelaaja.Velocity.Y * -1.1));
+        }
 
     }
 
@@ -300,6 +302,7 @@ public class Apinapallo : PhysicsGame
     public void LuoPelaaja(Vector paikka, double leveys, double korkeus, string kuvanNimi)
     {
         pelaaja = new PhysicsObject(RUUDUN_LEVEYS / 2.1, RUUDUN_KORKEUS / 1.1, Shape.Circle);
+        pelaaja.CanRotate = true;
         pelaaja.Position = paikka;
         pelaaja.Restitution = KIMMOISUUS;
         pelaaja.KineticFriction = 1.0;
@@ -384,22 +387,22 @@ public class Apinapallo : PhysicsGame
         Keyboard.Listen(Key.Left, ButtonState.Released, LiikutaAlustaa, null, alusta, Vector.Zero);
         Keyboard.Listen(Key.Space, ButtonState.Pressed, AloitaPeli, "Peli käyntiin", pelaaja);
 
-         //testauskoodi
-         /*
-        Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, null, pelaaja, new Vector(100, 0));
-        Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, null, pelaaja, new Vector(-100, 0));
-        Keyboard.Listen(Key.Down, ButtonState.Down, Liikuta, null, pelaaja, new Vector(0, -100));
-        Keyboard.Listen(Key.Up, ButtonState.Down, Liikuta, null, pelaaja, new Vector(0, 100));*/
-        
+        //testauskoodi
+        /*
+       Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, null, pelaaja, new Vector(100, 0));
+       Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, null, pelaaja, new Vector(-100, 0));
+       Keyboard.Listen(Key.Down, ButtonState.Down, Liikuta, null, pelaaja, new Vector(0, -100));
+       Keyboard.Listen(Key.Up, ButtonState.Down, Liikuta, null, pelaaja, new Vector(0, 100));*/
+
     }
 
-     //testauskoodi
-     /*
-    public void Liikuta(PhysicsObject pelaaja, Vector liikutusvoima)
-    {
-        pelaaja.Hit(liikutusvoima);
-    }*/
-    
+    //testauskoodi
+    /*
+   public void Liikuta(PhysicsObject pelaaja, Vector liikutusvoima)
+   {
+       pelaaja.Hit(liikutusvoima);
+   }*/
+
 
     /// <summary>
     /// Alustan liikutuksen käsittelijä ja pelaajapallon määritys
@@ -441,7 +444,6 @@ public class Apinapallo : PhysicsGame
         if (alkutilanne < 1)
         {
             pelaaja.Mass = 1.0;
-            pelaaja.CanRotate = true;
             if (alusta.Velocity.X < 0) suuntakerroin = -1;
             pelaaja.Hit(new Vector(180 * suuntakerroin, 300));
             alkutilanne++;

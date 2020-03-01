@@ -14,7 +14,7 @@ using Jypeli.Widgets;
 public class Palikka : PhysicsObject
 {
     public Image[] Palikat { get; set; }
-    private int Osumat { get; set; }
+    public int Osumat { get; private set; }
 
     /// <summary>
     /// Luo uuden palikan
@@ -39,10 +39,10 @@ public class Palikka : PhysicsObject
     public void OtaVastaanOsuma(Image[] kuvat)
     {
         Osumat++;
-        if (Osumat == kuvat.Length - 1)
-        {
-            this.IgnoresCollisionResponse = true;
-        }
+        //if (Osumat == kuvat.Length - 1)
+       // {
+      //      this.IgnoresCollisionResponse = true;
+        //}
         if (Osumat >= kuvat.Length)
         {
             this.Destroy();
